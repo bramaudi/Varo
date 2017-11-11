@@ -4,6 +4,6 @@
 
 # Installation
 
- 1 Import **install.sql** to Database
- 2 Configure database connection in **database.php**
- 3 Login with default admin account using email **admin@site.com** and password **admin**
+1. Import **install.sql** to Database
+2. Configure database connection in **database.php**
+3. Login with default admin account using email **admin@site.com** and password **admin**

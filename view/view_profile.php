@@ -1,50 +1,52 @@
 <div class="row">
-<a style="float:left" href="javascript:window.history.back()"><button><span class="oi" data-glyph="chevron-left" title="chevron-left" aria-hidden="true"></span> Back</button></a>
-<a style="float:right" href="/"><button><span class="oi" data-glyph="home" title="home" aria-hidden="true"></span> Home</button></a>
+<span style="float:left" class="link" data-target="javascript:window.history.back()"><span class="oi" data-glyph="chevron-left" title="chevron-left" aria-hidden="true"></span> Back</span>
+<span style="float:right" class="link" data-target="/"><span class="oi" data-glyph="home" title="home" aria-hidden="true"></span> Home</span>
 </div>
 
-<div class="profile_img" style="background: url(/files/<?=$r['user']?>.jpg)no-repeat center center;background-size: cover;"></div>
-<center><h2><?=userName($r['id'])?></h2>
+<hr>
 
-<a href="/?v=messages&from_id=<?=$r['id']?>"><span class="oi" data-glyph="envelope-closed" title="envelope-closed" aria-hidden="true"></span> Messages</a>
- &nbsp; &nbsp; 
-<a href="<?=$url_fl?>"><span class="oi" data-glyph="<?=$ic_fl?>" title="<?=$ic_fl?>" aria-hidden="true"></span> <?=$var_fl?></a>
+<div class="avatar-xl" style="background: url(/files/<?=$r['user']?>.jpg)no-repeat center center;background-size: cover; margin: 20px auto"></div>
+
+<h2 align="center "><?=userName($r['id'])?></h2>
+
+<div class="box">
+
+<div class="link box-item" data-target="/?v=messages&from_id=<?=$r['id']?>"><span class="oi" data-glyph="envelope-closed" title="envelope-closed" aria-hidden="true"></span> Messages</div>
+
+<div class="link box-item" data-target="<?=$url_fl?>"><span class="oi" data-glyph="<?=$ic_fl?>" title="<?=$ic_fl?>" aria-hidden="true"></span> <?=$var_fl?></div>
 
 <?php
 if ($logged['level'] < 2) {
 ?>
 
- &nbsp; &nbsp; 
-<a href="<?=$url_ban?>"><span class="oi" data-glyph="<?=$ic_ban?>" title="<?=$ic_ban?>" aria-hidden="true"></span> <?=$var_ban?></a>
+<div class="link box-item" data-target="<?=$url_ban?>"><span class="oi" data-glyph="<?=$ic_ban?>" title="<?=$ic_ban?>" aria-hidden="true"></span> <?=$var_ban?></div>
 
 <?php
 }
 ?>
 
-</center>
-
-<br/>
-<div class="title row">
-<a class="static">Statistic</a>
 </div>
+
 <div class="box">
-<div class="item">
+<div class="box-title">Statistic</div>
+
+<div class="box-item">
 <span class="oi" data-glyph="person"></span> Level: <?=$level?>
 </div>
-<div class="item">
+<div class="box-item">
 <span class="oi" data-glyph="document"></span> Posts: <?=$posts?>
 </div>
-<div class="item">
+<div class="box-item">
 <span class="oi" data-glyph="chat"></span> Comments: <?=$comments?>
 </div>
-<div class="item">
+<div class="box-item">
 <span class="oi" data-glyph="clock"></span> Last active: <?=timeFormat($last)?>
 </div>
+
 </div>
 
-<div class="title row">
-<a class="static">About</a>
-</div>
 <div class="box">
+<div class="box-title">About</div>
+<div class="box-item">
 	<div class="text"><?=$about?></div>
 </div>

@@ -1,69 +1,22 @@
-<?php
-if (logged()) {
-?>
-
-<div class="row" style="margin-bottom: 5px">
-<a href="/?v=profile&user=<?=$logged['user']?>">
-	<div class="profile_thumb" style="background:url(/files/<?=$logged['user']?>.jpg)no-repeat center center; background-size: cover;float:left;margin-right:10px;border:none"></div>
-	<div style="display:inline-block;float:left"><strong><?=$logged['first']?> <?=$logged['last']?></strong></div>
-</a>
-<a href="/?v=inbox">
-<div style="float: right">
-<span class="newMessages"></span>
-</div>
-</a>
-</div>
-
-<div class="title row">
-	<a class="active"><span class="oi" data-glyph="home" title="home" aria-hidden="true"></span></a>
-	<a href="/?v=friend" class="static"><span class="oi" data-glyph="people" title="people" aria-hidden="true"></span></a>
-	<a href="/?v=inbox" class="static"><span class="oi" data-glyph="envelope-closed" title="envelope-closed" aria-hidden="true"></span></a>
-	<a href="/?v=setting" class="static"><span class="oi" data-glyph="cog" title="cog" aria-hidden="true"></span></a>
-	<a class="static" style="float:right" href="/?v=cookie"><span class="oi" data-glyph="account-logout" title="account-logout" aria-hidden="true"></span></a>
-</div>
-
-<?php
-} else {
-?>
-
-<div class="title row">
-<a class="active"><span class="oi" data-glyph="home" title="home" aria-hidden="true"></span> Home</a>
-	<a href="/?v=login" class="static"><span class="oi" data-glyph="account-login" title="account-login" aria-hidden="true"></span> Login</a>
-	<a href="/?v=register" class="static"><span class="oi" data-glyph="people" title="people" aria-hidden="true"></span> Register</a>
-</div>
-
-<?php
-}
-?>
-
-<hr>
+<h1 class="title">Forum</h1>
 
 <?php
 if (logged() && $logged['level'] < 2) {
 ?>
 
-Add Forum:
+<label>Add Forum:</label>
 <div id="addForumNot"></div>
 <form id="addForum">
-<div class="row">
-<div class="msgInp">
-<input placeholder="Forum Name" type="text" value="" name="forum" required>
-</div>
-<div class="msgBtn">
+<input placeholder="Forum Name" type="text" value="" name="forum">
 <button>Add</button>
-</div>
-</div>
 </form>
-<br>
 
 <?php
 }
 if (!$forum->num_rows) {
 ?>
 
-<div class="box" align="center">
-No forum.
-</div>
+<div class="box" align="center">No forum.</div>
 
 <?php
 } else {
@@ -71,20 +24,21 @@ No forum.
 		$post = $db->query("SELECT * FROM varo_post WHERE forum_id = ".$r['id']." LIMIT 5");
 ?>
 
-<div class="title row">
-<a href="/?v=forum&id=<?=$r['id']?>" class="static"><?=$r['name']?></a>
+<div class="box">
+<div class="box-title row">
+<span data-target="/?v=forum&id=<?=$r['id']?>" class="link static"><?=$r['name']?></span>
 <a onclick="turtle('<?=$r['id']?>')" style="float: right" class="static">
 <span class="oi turtle<?=$r['id']?>" data-glyph="caret-bottom"></span>
 </a>
 </div>
 
-<div class="box" id="turtle<?=$r['id']?>">
+<div id="turtle<?=$r['id']?>">
 
 <?php
 if (!$post->num_rows) {
 ?>
 
-<div class="item" align="center">
+<div class="box-item" align="center">
 No Post.
 </div>
 
@@ -93,10 +47,10 @@ No Post.
 	while ($post_r = $post->fetch_assoc()) {
 ?>
 
-<div class="item">
-<a href="/?v=post&id=<?=$post_r['id']?>">
+<div class="box-item">
+<span class="link" data-target="/?v=post&id=<?=$post_r['id']?>">
 <span class="oi" data-glyph="document" title="document" aria-hidden="true"></span> <?=$post_r['title']?>
-</a>
+</span>
 </div>
 
 <?php
@@ -104,6 +58,7 @@ No Post.
 }
 ?>
 
+</div>
 </div> <!-- .box -->
 
 <?php
@@ -112,25 +67,25 @@ No Post.
 if (logged()) {
 ?>
 
-<hr/>
-
-<div class="title row">
-<a class="static">Menu</a>
-</div>
 <div class="box">
-<div class="item">
-<a href="/?v=gallery"><span class="oi" data-glyph="image"></span> Gallery <span style="float: right">(Album: <?=$albums?> / Images: <?=$images?>)</span></a>
-</div>
+<div class="box-title">Menu</div>
+
+<div class="box-item">
+<span class="link" data-target="/?v=gallery"><span class="oi" data-glyph="image"></span> Gallery <span style="float: right">(Album: <?=$albums?> / Images: <?=$images?>)</span></a>
 </div>
 
-<hr/>
-
-<div class="title row">
-<a class="static">Member</a>
 </div>
-<div class="box text">
-- Total member: <?=$member?> | Online: <?=$on_member?><br/>
-- New member: <a href="/?v=profile&user=<?=userUser($new_member['id'])?>"><?=userName($new_member['id'])?></a>
+
+<?php } if (logged() && $logged['level'] < 2) { ?>
+
+<div class="box">
+<div class="box-title">Statistic</div>
+
+<div class="box-item">
+Total member: <?=$member?> | Online: <?=$on_member?></div>
+<div class="box-item">
+New member: <span class="link" data-target="/?v=profile&user=<?=userUser($new_member['id'])?>"><?=userName($new_member['id'])?></span>
+</div>
 </div>
 
 <?php

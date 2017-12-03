@@ -1,54 +1,16 @@
-<?php
-if (logged()) {
-?>
-
-<div class="row" style="margin-bottom: 5px">
-<a href="/?v=profile&user=<?=$logged['user']?>">
-	<div class="profile_thumb" style="background:url(/files/<?=$logged['user']?>.jpg)no-repeat center center; background-size: cover;float:left;margin-right:10px;border:none"></div>
-	<div style="display:inline-block;float:left"><strong><?=$logged['first']?> <?=$logged['last']?></strong></div>
-</a>
-<a href="/?v=inbox">
-<div style="float: right">
-<span class="newMessages"></span>
-</div>
-</a>
-</div>
-
-<div class="title row">
-	<a class="active"><span class="oi" data-glyph="home" title="home" aria-hidden="true"></span></a>
-	<a href="/?v=friend" class="static"><span class="oi" data-glyph="people" title="people" aria-hidden="true"></span></a>
-	<a href="/?v=inbox" class="static"><span class="oi" data-glyph="envelope-closed" title="envelope-closed" aria-hidden="true"></span></a>
-	<a href="/?v=setting" class="static"><span class="oi" data-glyph="cog" title="cog" aria-hidden="true"></span></a>
-	<a class="static" style="float:right" href="/?v=cookie"><span class="oi" data-glyph="account-logout" title="account-logout" aria-hidden="true"></span></a>
-</div>
-
-<?php
-} else {
-?>
-
-<div class="title row">
-<a class="active"><span class="oi" data-glyph="home" title="home" aria-hidden="true"></span> Home</a>
-	<a href="/?v=login" class="static"><span class="oi" data-glyph="account-login" title="account-login" aria-hidden="true"></span> Login</a>
-	<a href="/?v=register" class="static"><span class="oi" data-glyph="people" title="people" aria-hidden="true"></span> Register</a>
-</div>
-
-<?php
-}
-?>
-
 <div class="row">
-<a style="float:left" href="/">
-<button><span class="oi" data-glyph="chevron-left" title="chevron-left" aria-hidden="true"></span> Back</button></a>
+<span class="link" style="float:left" data-target="/">
+<span class="oi" data-glyph="chevron-left" title="chevron-left" aria-hidden="true"></span> Back</span>
 
 <?php
 if (logged() && $logged['level'] < 2) {
 ?>
 
-<a style="float:right" onclick="xPopup('#delConfirm')">
-&nbsp; <button><span class="oi" data-glyph="trash" title="trash" aria-hidden="true"></span> Delete Forum</button></a>
+<span style="float:right" onclick="xPopup('#delConfirm')">
+&nbsp; <span class="oi" data-glyph="trash" title="trash" aria-hidden="true"></span> &nbsp;</span>
 
-<a style="float:right" onclick="xPopup('#rename')">
-&nbsp; <button><span class="oi" data-glyph="pencil" title="pencil" aria-hidden="true"></span> Rename</button></a>
+<span style="float:right" onclick="xPopup('#rename')">
+&nbsp; <span class="oi" data-glyph="pencil" title="pencil" aria-hidden="true"></span> &nbsp;</span>
 
 <div id="delConfirm" class="popup" style="display: none">
 <div class="popup-content">
@@ -64,8 +26,8 @@ Delete this forum and all post inside?<br/>
 if (logged()) {
 ?>
 
-<a style="float:right" href="/?v=addPost&&forum_id=<?=$r['id']?>">
-<button><span class="oi" data-glyph="plus" title="plus" aria-hidden="true"></span> Post</button></a>
+<span class="link" style="float:right" data-target="/?v=addPost&&forum_id=<?=$r['id']?>">
+<span class="oi" data-glyph="plus" title="plus" aria-hidden="true"></span> Post &nbsp;</span>
 
 <?php
 }
@@ -80,31 +42,23 @@ if (logged() && $logged['level'] < 2) {
 ?>
 
 <div id="rename" style="display: none">
-Rename forum: 
+<label>Rename forum:</label>
 <div id="not"></div>
 <form id="edit">
-<div class="row">
-<div class="msgInp">
 <input type="hidden" name="id" value="<?=$r['id']?>"/>
 <input type="text" value="<?=$r['name']?>" name="forum" required>
-</div>
-<div class="msgBtn">
 <button>Set</button>
-</div>
-</div>
 </form>
-<hr>
 </div>
 
 <?php
 }
 ?>
 
-<div class="title row">
-<a class="static"><?=$r['name']?></a>
-</div>
-
 <div class="box">
+<div class="box-title"><?=$r['name']?></div>
+
+<div class="box-item">
 
 <?php
 $post = $db->query("SELECT * FROM varo_post WHERE forum_id = ".$r['id']." ORDER BY last LIMIT $start,$offset");
@@ -112,18 +66,16 @@ $post = $db->query("SELECT * FROM varo_post WHERE forum_id = ".$r['id']." ORDER 
 if (!$post->num_rows) {
 ?>
 
-<div class="item" align="center">No post.</div>
+<center>No post.</center>
 
 <?php
 } else {
 	while ($post_r = $post->fetch_assoc()) {
 ?>
 
-<div class="item">
-<a href="?v=post&id=<?=$post_r['id']?>">
+<span class="link" data-target="?v=post&id=<?=$post_r['id']?>">
 <span class="oi" data-glyph="document" title="document" aria-hidden="true"></span> <?=$post_r['title']?>
-</a>
-</div>
+</span>
 
 <?php
 	}
@@ -131,6 +83,7 @@ if (!$post->num_rows) {
 ?>
 
 </div>
+</div> <!-- .box -->
 
 <?php
 if ($total > $offset) {
@@ -143,7 +96,7 @@ if ($total > $offset) {
 if ($page <= $sum && $page >= 2) {
 ?>
 
-<a style="float:left" href="<?=$ref?>&page=<?=($page-1)?>"><button><span class="oi" data-glyph="chevron-left"></span> Previous</button></a>
+<span class="link" style="float:left" data-target="<?=$ref?>&page=<?=($page-1)?>"><button><span class="oi" data-glyph="chevron-left"></span> Newer</button></span>
 
 <?php
 }
@@ -151,12 +104,15 @@ if ($page <= $sum && $page >= 2) {
 if ($page < $sum) {
 ?>
 
-<a style="float:right" href="<?=$ref?>&page=<?=($page+1)?>"><button>Next <span class="oi" data-glyph="chevron-right"></span></button></a>
-</div>
+<span class="link" style="float:right" data-target="<?=$ref?>&page=<?=($page+1)?>"><button>Older &nbsp; <span class="oi" data-glyph="chevron-right"></span></button></span>
 
 <?php
 	}
-}
+} ?>
+
+</div>
+
+<?php
 if (logged()) {
 ?>
 

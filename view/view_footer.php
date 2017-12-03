@@ -11,6 +11,12 @@ setInterval(function(){
 }
 ?>
 
-</div><!-- .wrapper -->
+</div><!-- .container -->
+
+<script src="/assets/slideout.min.js"></script>
+<script src="/assets/varo.js"></script>
+<script src="/assets/jquery.lazyload.min.js"></script>
+<script>$('.lazy').lazyload({effect: "fadeIn"});</script>
+
 </body>
 </html>

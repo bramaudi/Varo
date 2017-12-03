@@ -1,34 +1,17 @@
-<div class="row" style="margin-bottom: 5px">
-<a href="/?v=profile&user=<?=$logged['user']?>">
-	<div class="profile_thumb" style="background:url(/files/<?=$logged['user']?>.jpg)no-repeat center center; background-size: cover;float:left;margin-right:10px;border:none"></div>
-	<div style="display:inline-block;float:left"><strong><?=$logged['first']?> <?=$logged['last']?></strong></div>
-</a>
-<a href="/?v=inbox">
-<div style="float: right">
-<span class="newMessages"></span>
-</div>
-</a>
+<div class="no-padding">
+
+<div class="row sub-item">
+<span class="link sub-active" data-target="/?v=inbox"><span class="oi" data-glyph="chevron-left"></span> Back</span>
+<span class="sub-current"><span class="oi" data-glyph="envelope-closed"></span> Inbox</span>
+<span class="link sub-active" data-target="/?v=sent"><span class="oi" data-glyph="task"></span> Sent</span>
 </div>
 
-<div class="title row">
-	<a href="/" class="static"><span class="oi" data-glyph="home" title="home" aria-hidden="true"></span></a>
-	<a href="/?v=friend" class="static"><span class="oi" data-glyph="people" title="people" aria-hidden="true"></span></a>
-	<a class="active"><span class="oi" data-glyph="envelope-closed" title="envelope-closed" aria-hidden="true"></span></a>
-	<a href="/?v=setting" class="static"><span class="oi" data-glyph="cog" title="cog" aria-hidden="true"></span></a>
-	<a class="static" style="float:right" href="/?v=cookie"><span class="oi" data-glyph="account-logout" title="account-logout-open" aria-hidden="true"></span></a>
+<div class="link row sub-item" data-target="/?v=profile&user=<?=userUser($from_id)?>">
+<div class="avatar-lg" style="display:inline-block;background:url(/files/<?=userUser($from_id)?>.jpg)no-repeat center center; background-size: cover;border:none;float:left;margin: 0 10px 0 0"></div>
+<b><?=userName($from_id)?></b>
+<br>
+<span id="onlineStats"></span>
 </div>
-
-<div class="row">
-<a style="float:left" href="/?v=inbox"><button><span class="oi" data-glyph="chevron-left" title="chevron-left" aria-hidden="true"></span> Inbox</button></a>
-
-<a style="float:right" href="/?v=profile&user=<?=userUser($from_id)?>">
-<div style="margin: 10px 0 0 0">
-	<div style="display:inline-block;float:left"><span id="onlineStats"></span> <?=userName($from_id)?></div>
-</div>
-</a>
-</div>
-
-<hr>
 
 <?php
 if ($page < $sum) {
@@ -42,7 +25,7 @@ if ($page < $sum) {
 }
 ?>
 
-<div id="messagesShow">
+<div id="messagesShow" data-slideout-ignore>
 </div>
 
 <?php
@@ -59,20 +42,15 @@ if ($page <= $sum && $page >= 2) {
 if ($page < 2) {
 ?>
 
-<br>
 <div id="messageNot"></div>
 <form id="messageForm">
 <input type="hidden" name="to_id" value="<?=$from_id?>">
 <input type="hidden" name="from_id" value="<?=$logged['id']?>">
-<div class="row">
-<div class="msgInp">
-<textarea id="message" name="message"></textarea>
-</div>
-<div class="msgBtn">
-<button>Send</button>
-</div>
-</div>
+<textarea class="chat-inp" id="message" name="message"></textarea>
+<button class="chat-btn">Send</button>
 </form>
+
+</div>
 
 <script>$('html, body').animate({
 	scrollTop: '9999'

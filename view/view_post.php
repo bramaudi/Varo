@@ -1,54 +1,16 @@
-<?php
-if (logged()) {
-?>
-
-<div class="row" style="margin-bottom: 5px">
-<a href="/?v=profile&user=<?=$logged['user']?>">
-	<div class="profile_thumb" style="background:url(/files/<?=$logged['user']?>.jpg)no-repeat center center; background-size: cover;float:left;margin-right:10px;border:none"></div>
-	<div style="display:inline-block;float:left"><strong><?=$logged['first']?> <?=$logged['last']?></strong></div>
-</a>
-<a href="/?v=inbox">
-<div style="float: right">
-<span class="newMessages"></span>
-</div>
-</a>
-</div>
-
-<div class="title row">
-	<a class="active"><span class="oi" data-glyph="home" title="home" aria-hidden="true"></span></a>
-	<a href="/?v=friend" class="static"><span class="oi" data-glyph="people" title="people" aria-hidden="true"></span></a>
-	<a href="/?v=inbox" class="static"><span class="oi" data-glyph="envelope-closed" title="envelope-closed" aria-hidden="true"></span></a>
-	<a href="/?v=setting" class="static"><span class="oi" data-glyph="cog" title="cog" aria-hidden="true"></span></a>
-	<a class="static" style="float:right" href="/?v=cookie"><span class="oi" data-glyph="account-logout" title="account-logout" aria-hidden="true"></span></a>
-</div>
-
-<?php
-} else {
-?>
-
-<div class="title row">
-<a class="active"><span class="oi" data-glyph="home" title="home" aria-hidden="true"></span> Home</a>
-	<a href="/?v=login" class="static"><span class="oi" data-glyph="account-login" title="account-login" aria-hidden="true"></span> Login</a>
-	<a href="/?v=register" class="static"><span class="oi" data-glyph="people" title="people" aria-hidden="true"></span> Register</a>
-</div>
-
-<?php
-}
-?>
-
 <div class="row">
-<a style="float:left" href="/?v=forum&id=<?=$r['forum_id']?>">
-<button><span class="oi" data-glyph="chevron-left" title="chevron-left" aria-hidden="true"></span> Forum</button></a>
+<span class="link" style="float:left" data-target="/?v=forum&id=<?=$r['forum_id']?>">
+<span class="oi" data-glyph="chevron-left" title="chevron-left" aria-hidden="true"></span> Forum</span>
 
-<a style="float:right" href="/">
-&nbsp; <button><span class="oi" data-glyph="home" title="home" aria-hidden="true"></span> Home</button></a>
+<span class="link" style="float:right" data-target="/">
+&nbsp; <span class="oi" data-glyph="home" title="home" aria-hidden="true"></span> Home</span>
 
 <?php
 if (logged() && $logged['level'] < 2 OR logged() && $r['author'] == $logged['id']) {
 ?>
 
-<a style="float:right" onclick="xPopup('#delConfirm')">
-&nbsp; <button><span class="oi" data-glyph="trash" title="trash" aria-hidden="true"></span> Delete Post</button></a>
+<span style="float:right" onclick="xPopup('#delConfirm')">
+&nbsp; <span class="oi" data-glyph="trash" title="trash" aria-hidden="true"></span> &nbsp;</span>
 
 <div id="delConfirm" class="popup" style="display: none">
 <div class="popup-content">
@@ -59,8 +21,8 @@ Delete this post and all comment inside?<br/>
 </div>
 </div>
 
-<a style="float:right" href="/?v=editPost&id=<?=$id?>">
-&nbsp; <button><span class="oi" data-glyph="pencil" title="pencil" aria-hidden="true"></span> Edit Post</button></a>
+<span class="link" style="float:right" data-target="/?v=editPost&id=<?=$id?>">
+&nbsp; <span class="oi" data-glyph="pencil" title="pencil" aria-hidden="true"></span> &nbsp;</span>
 
 <?php
 }
@@ -73,15 +35,16 @@ Delete this post and all comment inside?<br/>
 if ($page < 2) {
 ?>
 
-<div class="title row" style="padding: 10px">
-<a href="/?v=profile&user=<?=userUser($r['author'])?>">
-	<div class="profile_thumb" style="background:url(/files/<?=userUser($r['author'])?>.jpg)no-repeat center center; background-size: cover;float:left;margin-right:10px;border:none"></div>
-	<div style="display:inline-block;float:left"><?=userName($r['author'])?></div>
-</a>
+<div class="box">
+
+<div class="row" style="background: #f5f5f5; border-bottom: 1px solid #e1e1e1; border-top-left-radius: 3px; border-top-right-radius: 3px">
+<span class="link" data-target="/?v=profile&user=<?=userUser($r['author'])?>">
+	<span class="avatar-md" style="background:url(/files/<?=userUser($r['author'])?>.jpg)no-repeat center center; background-size: cover;	border-top-left-radius: 2px; float: left;"></span>
+<span style="margin: 10px auto; float: left"><?=userName($r['author'])?></span>
+</span>
 </div>
 
-<div class="box">
-<div class="item text post">
+<div class="box-item">
 <?=nl2br(setText($r['text']))?>
 </div>
 
@@ -90,11 +53,13 @@ if ($page < 2) {
 if (!empty($r['edit_time'])) {
 ?>
 
-<div class="item"><span class="oi" data-glyph="pencil"></span> Edited by <a href="/?v=profile&user=<?=userUser($r['edit_author'])?>"><?=userName($r['edit_author'])?></a> on <?=date('d.m.Y',$r['edit_time'])?></div>
+<div class="box-item" style="font-size: x-small"><span class="oi" data-glyph="clock"></span> <?=timeago($r['time'])?> &#183; <span class="oi" data-glyph="pencil"></span> <span class="link" data-target="/?v=profile&user=<?=userUser($r['edit_author'])?>"><?=userName($r['edit_author'])?></span> / <?=date('d.m.Y',$r['edit_time'])?></div>
 
-<?php
-}
-?>
+<?php } else { ?>
+
+<div class="box-item" style="font-size: x-small"><span class="oi" data-glyph="clock"></span> <?=timeago($r['time'])?></div>
+
+<?php } ?>
 
 </div>
 
@@ -102,13 +67,11 @@ if (!empty($r['edit_time'])) {
 } else {
 ?>
 
-<div class="title row"><a href="/?v=post&id=<?=$r['id']?>" class="static"><span class="oi" data-glyph="document"></span> <?=$title?></a></div>
+<div class="title row"><span class="link" data-target="/?v=post&id=<?=$r['id']?>" class="static"><span class="oi" data-glyph="document"></span> <?=$title?></span></div>
 
 <?php
 }
 ?>
-
-<hr/>
 
 <!-- comments -->
 
@@ -119,19 +82,22 @@ if ($comment->num_rows > 0) {
 ?>
 
 <a name="<?=$c['id']?>"></a>
-<div class="title row" style="padding: 10px">
-<a href="/?v=profile&user=<?=userUser($c['author'])?>">
-	<div class="profile_thumb" style="background:url(/files/<?=userUser($c['author'])?>.jpg)no-repeat center center; background-size: cover;float:left;margin-right:10px;border:none"></div>
-	<div style="display:inline-block;float:left"><?=userName($c['author'])?></div>
-</a>
+
+<div class="box">
+
+<div class="row" style="background: #f5f5f5; border-bottom: 1px solid #e1e1e1; border-top-left-radius: 3px; border-top-right-radius: 3px">
+<span class="link" data-target="/?v=profile&user=<?=userUser($c['author'])?>">
+	<span class="avatar-md" style="background:url(/files/<?=userUser($c['author'])?>.jpg)no-repeat center center; background-size: cover;	border-top-left-radius: 2px; float: left;"></span>
+<span style="margin: 10px auto; float: left"><?=userName($c['author'])?></span>
+</span>
 
 <?php
 if (logged() && $logged['level'] < 2 OR logged() && $c['author'] == $logged['id']) {
 ?>
 
-<a onclick="picu('<?=$c['id']?>')" style="float:right"> &nbsp; <span class="oi" data-glyph="trash"></span> Delete</a>
+<span onclick="picu('<?=$c['id']?>')" style="margin: 10px 10px 0 0; float:right"> &nbsp; <span class="oi" data-glyph="trash"></span></span>
 
-<a href="/?v=editComment&id=<?=$c['id']?>&ref=<?=rawurlencode($_SERVER['REQUEST_URI'])?>" style="float:right"><span class="oi" data-glyph="pencil"></span> Edit &#183; </a>
+<span class="link" data-target="/?v=editComment&id=<?=$c['id']?>&ref=<?=rawurlencode($_SERVER['REQUEST_URI'])?>" style="margin-top: 10px; float:right"><span class="oi" data-glyph="pencil"></span> &#183; </span>
 
 <div id="terpicu<?=$c['id']?>" class="popup" style="display: none">
 <div class="popup-content">
@@ -148,8 +114,7 @@ Delete this comment?<br/>
 
 </div>
 
-<div class="box">
-<div class="item text">
+<div class="box-item">
 <div class="row">
 
 <?php
@@ -158,7 +123,7 @@ if (logged()) {
 
 <div align="right" style="float:right; width: 20%">
 
-<a onclick="reply('<?=$c['id']?>')" style="font-size: xx-small"><span class="oi" data-glyph="share-boxed"></span> Reply</a>
+<span onclick="reply('<?=$c['id']?>')" style="font-size: xx-small"><span class="oi" data-glyph="double-quote-serif-left"></span> Quote</span>
 <div id="text<?=$c['id']?>" data-reply="[q]<?=readmore(strip_tags(nl2br(strip_tags(no_quote($c['text'])))), 160)?>[/q]"></div>
 
 </div>
@@ -173,7 +138,7 @@ if (logged()) {
 }
 ?>
 
-<div class="post" style="float:left; width:80%">
+<div style="float:left; width:80%">
 <?=nl2br(setText($c['text']))?>
 </div>
 
@@ -185,27 +150,25 @@ if (logged()) {
 if (!empty($c['edit_time'])) {
 ?>
 
-<div class="item"><span class="oi" data-glyph="pencil"></span> Edited by <a href="/?v=profile&user=<?=userUser($c['edit_author'])?>"><?=userName($c['edit_author'])?></a> on <?=date('d.m.Y',$c['edit_time'])?></div>
+<div class="box-item" style="font-size: x-small"><span class="oi" data-glyph="clock"></span> <?=timeago($c['time'])?> &#183; <span class="oi" data-glyph="pencil"></span> <span class="link" data-target="/?v=profile&user=<?=userUser($c['edit_author'])?>"><?=userName($c['edit_author'])?></span> / <?=date('d.m.Y',$c['edit_time'])?></div>
 
-<?php
-}
-?>
+<?php } else { ?>
+
+<div class="box-item" style="font-size: x-small"><span class="oi" data-glyph="clock"></span> <?=timeago($c['time'])?></div>
+
+<?php } ?>
 
 </div>
-<hr/>
 
 <?php
 	} // end while
 ?>
 
-<?php
-// pagination
-if ($total > $offset) {
-?>
-
 <div class="row">
 
 <?php
+// pagination
+if ($total > $offset) {
 // previous
 if ($page <= $sum && $page >= 2) {
 ?>
@@ -219,7 +182,6 @@ if ($page < $sum) {
 ?>
 
 <a style="float:right" href="<?=$ref?>&page=<?=($page+1)?>"><button>Next <span class="oi" data-glyph="chevron-right"></span></button></a>
-</div>
 
 <?php
 	}
@@ -234,25 +196,22 @@ if ($page < $sum) {
 if (logged()) {
 ?>
 
-<div id="commentNot"></div>
-<form id="messageForm">
+<div id="notify"></div>
+
+<form id="form">
 <input type="hidden" name="post_id" value="<?=$r['id']?>">
 <input type="hidden" name="ref" value="<?=$_SERVER['REQUEST_URI']?>">
-<div class="row">
-<div class="msgInp">
+<label>Write reply:</label>
 <textarea id="message" name="text"></textarea>
-</div>
-<div class="msgBtn">
-<button>Post</button>
-</div>
-</div>
+<button id="btn" class="btn-full">Post</button>
 </form>
 
 <script>
 function reply(Id) {
 	$('html, body').scrollTop($(document).height());
 	var txt = $('#text'+Id).attr('data-reply');
-	$('#message').val(txt);
+	var msg = $('#message').val();
+	$('#message').val(txt+' '+msg);
 }
 function xPopup(Id) {
 	$(Id).toggle();
@@ -261,17 +220,19 @@ function picu(Id) {
 		$('#terpicu'+Id).toggle();
 	}
 $(document).ready(function(){
-	$('#messageForm').submit(function(x){
+	$('#form').submit(function(x){
 		x.preventDefault();
+		$('#btn').html('<span class="spin"></span>');
 		$.ajax ({
 			url: '/ajax/ajax_comment.php',
 			type: 'POST',
 			data: $(this).serialize(),
 			success: function(data){
+				$('#btn').html('Post');
 				$('html, body').animate({
 					scrollTop: $(document).height()
 				}, 300);
-				$('#commentNot').html(data);
+				$('#notify').html(data);
 			}
 		});
 	});

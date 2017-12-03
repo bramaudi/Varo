@@ -1,7 +1,7 @@
 <?php
 
 // global variable
-$global_title = 'VaroCMS';
+$global_title = '&radic;aro';
 
 // default site variable
 $site = array(
@@ -14,14 +14,6 @@ $v = isset($_GET['v']) ? trim($_GET['v']):'';
 require_once 'database.php';
 require_once 'function.php';
 require_once 're_check.php';
-
-// theme color
-if (logged() && !empty($logged['theme'])) {
-	$color = $logged['theme'];
-} else {
-	$color = 'B62525;
-		background: linear-gradient(to right, #B62525, #B4275D)';
-}
 
 switch ($v) {
 	
@@ -128,11 +120,6 @@ switch ($v) {
 	// banned
 	case 'ban':
 	require_once './control/control_banned.php';
-	break;
-	
-	// theme
-	case 'theme':
-	require_once './control/control_theme.php';
 	break;
 	
 	// gallery

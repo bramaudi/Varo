@@ -16,6 +16,32 @@ function logged() {
 	}
 }
 
+// time ago format
+function timeago($original) {
+$original = strtotime($original);
+$chunks = array(
+array(60*60*24*365,'years'),
+array(60*60*24*30,'month'),
+array(60*60*24*7,'week'),
+array(60*60*24,'day'),
+array(60*60,'hours'),
+array(60,'minutes'));
+$today = time();
+$since = $today - $original;
+for ($i=0,$j=count($chunks);$i<$j;$i++) {
+$seconds = $chunks[$i][0];
+$name = $chunks[$i][1];
+if (($count = floor($since / $seconds)) != 0)
+break;
+}
+$print = ($count == 1) ? '1 '.$name : "$count {$name}";
+if ($original > (time()-60)) {
+	return 'Just now';
+	} else {
+	return $print;
+}
+}
+
 // filter input
 function filter($n) {
 	
@@ -112,16 +138,16 @@ function setText($n) {
 "'\*(.*?)\*'is"=>" <b>$1</b> ",
 "'_(.*?)_'is"=>" <i>$1</i> ",
 "'\[u\](.*?)\[/u\]'is"=>" <u>$1</u> ",
-"'\[img=(.*?)\]'is"=>" <a href='/?v=images&id=$1'><img src='/images/$1.jpg' alt='image' title='Image'/></a> ",
+"'\[img=(.*?)\]'is"=>" <span class='link' data-target='/?v=images&id=$1'><img class='lazy' data-original='/images/$1.jpg' alt='image' title='Image'/></span> ",
 "'\[code\](.*?)\[/code\]'is"=>" <textarea rows='2'>$1</textarea> ",
 "/(\R){2,}/"=>"<br/><br/>"
 );
 	$so = preg_replace_callback('~\\[url=(https?://.+?)\\](.+?)\\[/url\\]|(https?://(www.)?[0-9a-z\.-]+\.[0-9a-z]{2,6}[0-9a-zA-Z/\?\.\~&amp;_=/%-:#]*)~', function ($anu)
 {
 if (!isset($anu[3])) {
-return '<a href="'.$anu[1].'" rel="nofollow" target="_blank">'.$anu[2].'</a>';
+return '<span class="link" data-target="'.$anu[1].'" rel="nofollow" target="_blank">'.$anu[2].'</span>';
 } else {
-return '<a href="'.$anu[3].'" rel="nofollow" target="_blank">'.$anu[3].'</a>';
+return '<span class="link" data-target="'.$anu[3].'" rel="nofollow" target="_blank">'.$anu[3].'</span>';
 }
 }, $n);
 	$so = preg_replace(array_keys($array), array_values($array), $so);

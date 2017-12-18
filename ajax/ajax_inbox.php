@@ -14,12 +14,10 @@ $num = $sql->num_rows;
 if ($num == 0) {
 ?>
 
-<div class="box" align="center">
-<br>
-<br>
-<h4><span class="oi" data-glyph="envelope-open" title="envelope-open" aria-hidden="true"></span> No messages.</h4>
-<br>
-<br>
+<div class="sub-item">
+<div class="container" align="center">
+No messages
+</div>
 </div>
 
 <?php
@@ -31,23 +29,28 @@ $r = $db->query("SELECT * FROM varo_messages WHERE from_id = ".$row['from_id']."
 if ($r['from_id'] == $logged['id']) {
 	$info = '<span class="oi" data-glyph="share" title="share" aria-hidden="true"></span> &nbsp;';
 } elseif (!$r['seen']) {
-	$info = '<font color="yellow">*</font> ';
+	$info = '<font color="red">*</font> ';
 } else {
 	$info = '';
 }
 ?>
 
-<a href="/?v=messages&from_id=<?=$row['from_id']?>">
-<div class="row">
-<div class="profile_thumb" style="display:inline-block;background:url(/files/<?=userUser($row['from_id'])?>.jpg)no-repeat center center; background-size: cover;border:none;float:left;margin: 15px 10px 0 0"></div>
-<div class="messages" style="float:left">
+<span class="link" data-target="/?v=messages&from_id=<?=$row['from_id']?>">
+<div class="row sub-item">
+
+<div class="avatar-lg" style="display:inline-block;background:url(/files/<?=userUser($row['from_id'])?>.jpg)no-repeat center center; background-size: cover;border:none;float:left;margin: 0 10px 0 0"></div>
 <b><?=userName($row['from_id'])?></b>
 <br>
 <?=$info.readmore($r['text'], 20)?>
 </div>
-</div>
-</a>
+</span>
 
 <?php
 }
 }
+?>
+
+<script>$('.link').click(function(){
+	var url = $(this).attr('data-target');
+	window.location = url;
+});</script>

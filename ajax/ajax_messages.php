@@ -51,7 +51,7 @@ if ($date_div['id'] == $r['id']) {
 ?>
 
 <div class="row" align="center">
-<div class="messages info" style="display: inline-block">
+<div class="chat info" style="display: inline-block">
 <?=timeFormat(timeSet($r['time'],'d F Y'))?>
 </div>
 </div>
@@ -61,8 +61,8 @@ if ($date_div['id'] == $r['id']) {
 ?>
 
 <div class="row">
-<div class="messages <?=$class?>" style="float:<?=$float?>">
-<?=nl2br($r['text'])?> &nbsp; <span class="messages-info">
+<div class="chat <?=$class?>" style="float:<?=$float?>">
+<?=nl2br($r['text'])?> &nbsp; <span class="chat-info">
  &nbsp; <?=timeSet($r['time'],'h:i A').' '.$seen?>
 </span>
 </div>
